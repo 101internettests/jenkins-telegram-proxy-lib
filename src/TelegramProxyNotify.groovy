@@ -67,16 +67,16 @@ class TelegramProxyNotify implements Serializable {
     }
 
     def runRequest = {
-      proxyUrl = proxyUrl ?: TELEGRAM_PROXY_URL_CRED?.toString()?.trim()
-      authSecret = authSecret ?: TELEGRAM_PROXY_AUTH_SECRET_CRED?.toString()?.trim()
-      creds = creds ?: TELEGRAM_PROXY_CREDS_CRED?.toString()?.trim()
+     proxyUrl = proxyUrl ?: script.env.TELEGRAM_PROXY_URL_CRED?.toString()?.trim()
+     authSecret = authSecret ?: script.env.TELEGRAM_PROXY_AUTH_SECRET_CRED?.toString()?.trim()
+     creds = creds ?: script.env.TELEGRAM_PROXY_CREDS_CRED?.toString()?.trim()
 
-      if (!options.parseMode && parseModeCredentialId) {
-        parseMode = TELEGRAM_PROXY_PARSE_MODE_CRED?.toString()?.trim() ?: parseMode
-      }
-      if (!options.containsKey('disableNotification') && disableNotificationCredentialId) {
-        disableNotification = toBoolean(TELEGRAM_PROXY_DISABLE_NOTIFICATION_CRED)
-      }
+if (!options.parseMode && parseModeCredentialId) {
+  parseMode = script.env.TELEGRAM_PROXY_PARSE_MODE_CRED?.toString()?.trim() ?: parseMode
+}
+if (!options.containsKey('disableNotification') && disableNotificationCredentialId) {
+  disableNotification = toBoolean(script.env.TELEGRAM_PROXY_DISABLE_NOTIFICATION_CRED)
+}
 
       if (!proxyUrl) {
         throw new IllegalArgumentException("Missing proxy URL. Configure '${proxyUrlCredentialId}' credential or pass options.proxyUrl.")
